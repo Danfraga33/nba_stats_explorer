@@ -15,10 +15,14 @@ const Navigation: FC = () => {
 						<Link href="/">All Teams</Link>
 					</li>
 					<li>
-						<Link href="/new-meetup">Team Rosters</Link>
+						<Link href="/rosters">Team Rosters</Link>
 					</li>
 				</ul>
 			</nav>
+			<FontAwesomeIcon
+				icon={faBasketballBall}
+				className="block md:hidden text-4xl pr-2"
+			/>
 		</header>
 	);
 };
