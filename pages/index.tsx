@@ -4,17 +4,25 @@ import { useState, useEffect, ReactElement } from 'react';
 import Layout from '@/Layout';
 import { NextPageWithLayout } from './_app';
 
-// export const getStaticProps = async () => {
-// 	const response = await fetch('api/teams');
-// 	const data = await response.json();
-// 	console.log(data);
-// 	return {
-// 		props: { teams: data },
-// 	};
-// };
+export const getStaticProps = async () => {
+	const response = await fetch('https://free-nba.p.rapidapi.com/teams', {
+		headers: {
+			'X-RapidAPI-Key': process.env.NBA_API_KEY_2,
+			'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
+			'Content-Type': 'application/json',
+		},
+	});
+	const data = await response.json();
+	console.log(data);
+	return {
+		props: { nbaTeams: data },
+	};
+};
 
-const Home: NextPageWithLayout = () => {
-	const [teams, setTeams] = useState(); // TYPE NEEDED - TEAMS OBJECTS
+const Home: NextPageWithLayout = ({ nbaTeams }) => {
+	// TYPE NEEDED - TEAMS OBJECTS
+	const teams = nbaTeams.data;
+	console.log(teams);
 
 	// useEffect(() => {
 	// 	async function basketballPlayers() {
@@ -28,6 +36,7 @@ const Home: NextPageWithLayout = () => {
 	// 			const result = await response.json();
 
 	// 			const nbaTeamsData = result.data;
+
 	// 			setTeams(nbaTeamsData);
 	// 		} catch (err: any) {
 	// 			console.error('Error', err.message);
@@ -35,6 +44,10 @@ const Home: NextPageWithLayout = () => {
 	// 	}
 	// 	basketballPlayers();
 	// }, []);
+
+	if (!teams) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<>
