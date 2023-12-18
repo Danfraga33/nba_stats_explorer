@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-
+import Link from 'next/link';
 export interface MainContentProps {
 	teams: Array<{
 		id: number;
@@ -13,7 +13,6 @@ export interface MainContentProps {
 }
 
 const MainContent: FC<MainContentProps> = ({ teams }) => {
-	console.log(teams);
 	return (
 		<main className="container mt-4 justify-evenly items-center bg-blue-500 px-4 h-screen">
 			<h1 className="pb-5 w-full flex items-center justify-center">
@@ -29,7 +28,9 @@ const MainContent: FC<MainContentProps> = ({ teams }) => {
 						(team) =>
 							team.conference === 'West' && (
 								<ul key={team.id} className="leading-loose flex justify-end">
-									<li>{team.name}</li>
+									<li>
+										<Link href={`/teams/${team.id}`}>{team.name}</Link>
+									</li>
 								</ul>
 							)
 					)}
