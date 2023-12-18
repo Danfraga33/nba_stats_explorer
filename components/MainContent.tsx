@@ -13,6 +13,7 @@ export interface MainContentProps {
 }
 
 const MainContent: FC<MainContentProps> = ({ teams }) => {
+	console.log(teams);
 	return (
 		<main className="container mt-4 justify-evenly items-center bg-blue-500 px-4 h-screen">
 			<h1 className="pb-5 w-full flex items-center justify-center">
