@@ -13,14 +13,19 @@ export default async function handler(
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Key': 'f50a47a7ddmsh482e257a603d514p106077jsn56e5e9623fd3',
+			'X-RapidAPI-Key': process.env.NBA_API_KEY,
 			'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
+			'Content-Type': 'application/json',
 		},
 	};
 	try {
 		const response = await fetch(url, options);
 		const result = await response.json();
-		console.log(result);
+
+		if (!response.ok) {
+			throw new Error('Failed to fetch data');
+		}
+
 		res.status(200).json(result);
 	} catch (err: any) {
 		console.error('Error', err.message);
