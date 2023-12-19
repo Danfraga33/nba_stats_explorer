@@ -3,52 +3,69 @@ import * as fs from 'fs/promises';
 const baseURL = 'https://free-nba.p.rapidapi.com';
 const perPage = 100;
 
-async function fetchAllPlayers() {
-	let currentPage = 1;
-	let totalPages = 20;
+interface Player {
+	id: number;
+	first_name: string;
+	height_feet: number | null;
+	height_inches: number | null;
+	last_name: string;
+	position: string;
+	team: {
+		id: number;
+		abbreviation: string;
+		city: string;
+		conference: string;
+		division: string;
+		full_name: string;
+		name: string;
+	};
+	weight_pounds: number | null;
+}
 
-	const allPlayers = [];
+const fetchAllPlayers = async () => {
+	let currentPage = 0;
+	let allPlayers: Player[] = [];
 
-	while (currentPage <= totalPages) {
-		const url = `https://free-nba.p.rapidapi.com/players?page=${currentPage}per_page=${perPage}`;
-
-		const options: RequestInit = {
+	while (true) {
+		const url = `${baseURL}/players?page=${currentPage}&per_page=${perPage}`;
+		const options = {
 			method: 'GET',
 			headers: {
-				'X-RapidAPI-Key': process.env.NBA_API_KEY as string,
+				'X-RapidAPI-Key': 'e9fa5c1e9emshbaa329f12260eacp1dad05jsn7872cda1885d',
 				'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
 			},
 		};
 
 		try {
 			const response = await fetch(url, options);
+
 			if (!response.ok) {
-				console.error(`Failed to fetch players. Status: ${response.status}`);
-				const errorBody = await response.text();
-				console.error(`Error Body: ${errorBody}`);
-				throw new Error('Failed to fetch players');
+				throw new Error(`Failed to fetch data for page ${currentPage}`);
 			}
+
 			const result = await response.json();
-			console.log(result);
 
-			allPlayers.push(...result.data);
+			if (result.data.length === 0) {
+				// No more data, break the loop
+				break;
+			}
 
-			currentPage = result.meta.current_page + 1;
-			totalPages = result.meta.total_pages;
+			allPlayers = [...allPlayers, ...result.data];
+			currentPage++;
 		} catch (error) {
 			console.error(error);
-			// break; // Exit the loop in case of an error
+			break;
 		}
 	}
 
 	return allPlayers;
-}
+};
 
 async function savePlayersToFile(players: any[]) {
 	try {
 		const filePath = 'players.json';
 		await fs.writeFile(filePath, JSON.stringify(players, null, 2));
-		console.log(`Players data saved to ${filePath}`);
+		// console.log(`Players data saved to ${filePath}`);
 	} catch (error) {
 		console.error('Error saving players data:', error);
 	}

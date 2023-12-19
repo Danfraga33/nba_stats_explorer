@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import players from '../players.json';
 
 export interface TeamDataProps {
 	team?: {
@@ -11,6 +12,8 @@ export interface TeamDataProps {
 		name: string;
 	};
 }
+
+console.log(players.length);
 
 const TeamData: FC<TeamDataProps> = ({ team }) => {
 	return (
