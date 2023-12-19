@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
 		},
 	});
 	const data = await response.json();
-	console.log(data);
+
 	return {
 		props: { nbaTeams: data },
 	};
@@ -22,8 +22,6 @@ export const getStaticProps = async () => {
 const Home: NextPageWithLayout = ({ nbaTeams }) => {
 	// TYPE NEEDED - TEAMS OBJECTS
 	const teams = nbaTeams.data;
-	console.log(teams);
-
 	// useEffect(() => {
 	// 	async function basketballPlayers() {
 	// 		try {
