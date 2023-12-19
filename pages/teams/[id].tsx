@@ -2,6 +2,7 @@ import Layout from '@/Layout';
 import type { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
 import { NextPageWithLayout } from '../_app';
+import players from '../../players.json';
 
 import type { GetStaticPaths } from 'next';
 import TeamInfo from '@/components/TeamInfo';
@@ -63,14 +64,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			},
 		});
 
+		const roster = players.filter((player) => {
+			if (player.team.id === team.id) {
+				return player;
+			}
+		});
+		console.log('🤼🤼🤼ROSTER:', roster);
+
 		const gamesData = await games.json();
 		const fixturesData = gamesData.data;
-		console.log(fixturesData);
 
 		return {
 			props: {
 				team,
 				fixturesData,
+				roster,
 			},
 		};
 		revalidate: 60;
@@ -106,17 +114,31 @@ export interface DynamicData {
 		visitor_team: {};
 		visitor_team_score: number;
 	};
+
+	roster?: {
+		id: number;
+		first_name: string;
+		height_feet: null;
+		height_inches: null;
+		last_name: string;
+		position: string;
+		team: {};
+		weight_pounds: null;
+	};
 }
 
-const Team: NextPageWithLayout<DynamicData> = ({ team, fixturesData }) => {
+const Team: NextPageWithLayout<DynamicData> = ({
+	team,
+	fixturesData,
+	roster,
+}) => {
 	if (!team) {
 		return <p>Loading...</p>;
 	}
-	console.log(fixturesData);
 
 	return (
 		<>
-			<TeamInfo team={team} fixturesData={fixturesData} />
+			<TeamInfo team={team} roster={roster} fixturesData={fixturesData} />
 		</>
 	);
 };
