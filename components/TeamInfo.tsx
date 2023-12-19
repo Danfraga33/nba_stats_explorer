@@ -27,14 +27,27 @@ export interface TeamInfoProps {
 		visitor_team: {};
 		visitor_team_score: number;
 	};
+
+	roster?: {
+		id: number;
+		first_name: string;
+		height_feet: null;
+		height_inches: null;
+		last_name: string;
+		position: string;
+		team: {};
+		weight_pounds: null;
+	};
 }
 
-const TeamInfo: FC<TeamInfoProps> = ({ team, fixturesData }) => {
+const TeamInfo: FC<TeamInfoProps> = ({ team, roster, fixturesData }) => {
 	return (
 		<div className="flex justify-around gap-4 h-screen container mt-4 bg-blue-500 px-4">
-			<div className="flex flex-col gap-8">
+			<div className="flex flex-col gap-8 ">
 				<TeamData team={team} />
-				<Roster />
+				<div className="overflow-scroll">
+					<Roster roster={roster} />
+				</div>
 			</div>
 			<Fixtures fixturesData={fixturesData} />
 		</div>
