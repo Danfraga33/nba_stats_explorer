@@ -17,9 +17,6 @@ export interface FixturesDataProps {
 }
 
 const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
-	console.log(fixturesData);
-	// const dateString = new Date(game.date).toLocaleDateString();
-
 	return (
 		<>
 			<div className="overflow-scroll h-full">
@@ -27,7 +24,6 @@ const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
 				{fixturesData?.map((game) => (
 					<ul key={game.id}>
 						<li className="leading-loose">
-							{/* <div>Date:{game.date}</div> */}
 							<div className="flex">
 								<div>
 									{game.date.split('T')[0]}
