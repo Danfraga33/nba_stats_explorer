@@ -24,14 +24,14 @@ interface Player {
 
 const fetchAllPlayers = async () => {
 	let currentPage = 0;
-	let allPlayers: Player[] = [];
+	const allPlayers: Player[] = [];
 
 	while (true) {
 		const url = `${baseURL}/players?page=${currentPage}&per_page=${perPage}`;
 		const options = {
 			method: 'GET',
 			headers: {
-				'X-RapidAPI-Key': 'e9fa5c1e9emshbaa329f12260eacp1dad05jsn7872cda1885d',
+				'X-RapidAPI-Key': process.env.NBA_API_KEY_2 as string,
 				'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
 			},
 		};
@@ -50,7 +50,12 @@ const fetchAllPlayers = async () => {
 				break;
 			}
 
-			allPlayers = [...allPlayers, ...result.data];
+			const uniquePlayers = result.data.filter(
+				(player) =>
+					!allPlayers.some((existingPlayer) => existingPlayer.id === player.id)
+			);
+
+			allPlayers.push(...uniquePlayers);
 			currentPage++;
 		} catch (error) {
 			console.error(error);
