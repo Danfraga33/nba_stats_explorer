@@ -14,14 +14,23 @@ export interface TeamDataProps {
 
 const TeamData: FC<TeamDataProps> = ({ team }) => {
 	return (
-		<div>
-			<h1 className="flex items-center justify-center">Team Information</h1>
-			<h1 className="text-2xl">Team Name: {team?.name}</h1>
-			<p className="text-md">Full Name:{team?.full_name}</p>
-			<p className="text-md">Abbreviation: {team?.abbreviation}</p>
-			<p className="text-md">City: {team?.city}</p>
-			<p className="text-md">Conference:{team?.conference}</p>
-			<p className="text-md">Divison:{team?.division}</p>
+		<div className="flex flex-col items-center justify-center">
+			<h1 className="flex items-center justify-center text-2xl font-bold p-2 bg-white rounded-lg mt-2">
+				Team Information
+			</h1>
+			<h1 className="text-xl ">Team Name: {team?.name}</h1>
+			<ul className="text-md items-center flex flex-col leading-loose">
+				<li className="text-lg">Full Name:{team?.full_name}</li>
+				<li className="text-lg">Abbreviation: {team?.abbreviation}</li>
+				<li className="text-lg">City: {team?.city}</li>
+				<li className="text-lg">Conference:{team?.conference}</li>
+				<li className="text-lg">Divison:{team?.division}</li>
+			</ul>
+			<p className="text-md"></p>
+			<p className="text-md"></p>
+			<p className="text-md"></p>
+			<p className="text-md"></p>
+			<p className="text-md"></p>
 		</div>
 	);
 };
