@@ -14,9 +14,6 @@ const Navigation: FC = () => {
 					<li>
 						<Link href="/">All Teams</Link>
 					</li>
-					<li>
-						<Link href="/rosters">Team Rosters</Link>
-					</li>
 				</ul>
 			</nav>
 			<FontAwesomeIcon
