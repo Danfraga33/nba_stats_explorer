@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import MainContent from '@/components/MainContent';
-import { useState, useEffect, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import Layout from '@/Layout';
 import { NextPageWithLayout } from './_app';
 
@@ -12,6 +12,7 @@ export const getStaticProps = async () => {
 			'Content-Type': 'application/json',
 		},
 	});
+
 	const data = await response.json();
 
 	return {
