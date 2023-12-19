@@ -1,14 +1,10 @@
 import Layout from '@/Layout';
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
 import { NextPageWithLayout } from '../_app';
 
-import type {
-	InferGetStaticPropsType,
-	GetStaticProps,
-	GetStaticPaths,
-} from 'next';
-import { revalidateTag } from 'next/cache';
+import type { GetStaticPaths } from 'next';
+import TeamInfo from '@/components/TeamInfo';
 
 export const getStaticPaths = (async () => {
 	const response = await fetch('https://free-nba.p.rapidapi.com/teams', {
@@ -83,28 +79,23 @@ export interface DynamicData {
 	};
 }
 
-const Team: NextPageWithLayout<DynamicData> = ({ team, rosterData }) => {
+const Team: NextPageWithLayout<DynamicData> = ({ team }) => {
 	if (!team) {
 		return <p>Loading...</p>;
 	}
 
 	return (
-		<div className="container mt-4 justify-evenly items-center bg-blue-500 px-4 h-screen">
-			<h1 className="text-2xl">Team Name: {team.name}</h1>
-			<p className="text-md">Full Name:{team.full_name}</p>
-			<p className="text-md">Abbreviation: {team.abbreviation}</p>
-			<p className="text-md">City: {team.city}</p>
-			<p className="text-md">Conference:{team.conference}</p>
-			<p className="text-md">Divison:{team.division}</p>
-		</div>
+		<>
+			<TeamInfo team={team} />
+		</>
 	);
 };
 
 Team.getLayout = function getLayout(page: ReactElement) {
 	return (
-		<div>
+		<>
 			<Layout>{page}</Layout>
-		</div>
+		</>
 	);
 };
 
