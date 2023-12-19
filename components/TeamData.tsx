@@ -15,7 +15,7 @@ export interface TeamDataProps {
 const TeamData: FC<TeamDataProps> = ({ team }) => {
 	return (
 		<div className="flex flex-col items-center justify-center">
-			<h1 className="flex items-center justify-center text-2xl font-bold p-2 bg-white rounded-lg mt-2">
+			<h1 className="flex items-center justify-center text-xl font-bold p-2 bg-white rounded-lg mt-2">
 				Team Information
 			</h1>
 			<h1 className="text-xl ">Team Name: {team?.name}</h1>
