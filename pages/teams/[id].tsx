@@ -53,9 +53,24 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		const team = await teamData.json();
 		// console.log('END💪💪:', team);
 
+		const url = `https://free-nba.p.rapidapi.com/games?page=0&per_page=25&team_ids=${teamId}`;
+
+		const games = await fetch(url, {
+			headers: {
+				'X-RapidAPI-Key': process.env.NBA_API_KEY_2,
+				'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const gamesData = await games.json();
+		const fixturesData = gamesData.data;
+		console.log(fixturesData);
+
 		return {
 			props: {
 				team,
+				fixturesData,
 			},
 		};
 		revalidate: 60;
@@ -77,16 +92,31 @@ export interface DynamicData {
 		full_name: string;
 		name: string;
 	};
+
+	fixturesData?: {
+		id: number;
+		date: Date;
+		home_team: {};
+		home_team_score: number;
+		period: number;
+		postseason: boolean;
+		season: number;
+		status: string;
+		time: string;
+		visitor_team: {};
+		visitor_team_score: number;
+	};
 }
 
-const Team: NextPageWithLayout<DynamicData> = ({ team }) => {
+const Team: NextPageWithLayout<DynamicData> = ({ team, fixturesData }) => {
 	if (!team) {
 		return <p>Loading...</p>;
 	}
+	console.log(fixturesData);
 
 	return (
 		<>
-			<TeamInfo team={team} />
+			<TeamInfo team={team} fixturesData={fixturesData} />
 		</>
 	);
 };

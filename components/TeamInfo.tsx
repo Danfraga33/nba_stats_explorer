@@ -13,16 +13,30 @@ export interface TeamInfoProps {
 		full_name: string;
 		name: string;
 	};
+
+	fixturesData?: {
+		id: number;
+		date: Date;
+		home_team: {};
+		home_team_score: number;
+		period: number;
+		postseason: boolean;
+		season: number;
+		status: string;
+		time: string;
+		visitor_team: {};
+		visitor_team_score: number;
+	};
 }
 
-const TeamInfo: FC<TeamInfoProps> = ({ team }) => {
+const TeamInfo: FC<TeamInfoProps> = ({ team, fixturesData }) => {
 	return (
 		<div className="flex justify-around gap-4 h-screen container mt-4 bg-blue-500 px-4">
 			<div className="flex flex-col gap-8">
 				<TeamData team={team} />
 				<Roster />
 			</div>
-			<Fixtures />
+			<Fixtures fixturesData={fixturesData} />
 		</div>
 	);
 };
