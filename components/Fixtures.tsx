@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-
+import gameData from '../games.json';
 export interface FixturesDataProps {
 	fixturesData?: {
 		id: number;
@@ -17,34 +17,38 @@ export interface FixturesDataProps {
 }
 
 const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
+	if (!fixturesData) {
+		return <p>Loading...</p>;
+	}
+
 	return (
 		<>
-			<div className="flex flex-col">
-				<h1>Fixtures</h1>
-				<div className="overflow-scroll h-full">
-					{fixturesData?.map((game) => (
-						<ul key={game.id}>
-							<li className="leading-loose">
-								<div className="flex">
-									<div>
-										{game.date.split('T')[0]}
-										:&nbsp;
-									</div>
-									<div className="flex flex-col">
-										<div>{game.home_team.full_name}</div>
-										<div>{game.home_team_score}</div>
-									</div>
-
-									<span>&nbsp;Vs&nbsp;</span>
-									<div>
-										<div>{game.visitor_team.full_name}</div>
-										<div>{game.visitor_team_score}</div>
-									</div>
+			<h1 className="flex items-center justify-center text-2xl font-bold p-2 bg-white rounded-lg mt-2">
+				Fixtures
+			</h1>
+			<div className="overflow-auto flex flex-col items-center justify-center">
+				{fixturesData?.map((game) => (
+					<ul key={game.id}>
+						<li className="leading-relaxed flex flex-col items-center">
+							<div>
+								{game.date.split('T')[0]}
+								:&nbsp;
+							</div>
+							<div className="flex items-center justify-center w-full text-center">
+								<div className="flex flex-col">
+									<div>{game.home_team.full_name}</div>
+									<div>{game.home_team_score}</div>
 								</div>
-							</li>
-						</ul>
-					))}
-				</div>
+
+								<span>&nbsp;VS&nbsp;</span>
+								<div>
+									<div>{game.visitor_team.full_name}</div>
+									<div>{game.visitor_team_score}</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				))}
 			</div>
 		</>
 	);

@@ -3,6 +3,7 @@ import type { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
 import { NextPageWithLayout } from '../_app';
 import players from '../../players.json';
+import fixtures from '../../games.json';
 
 import type { GetStaticPaths } from 'next';
 import TeamInfo from '@/components/TeamInfo';
@@ -52,32 +53,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			throw new Error('Failed to fetch team data');
 		}
 		const team = await teamData.json();
-		// console.log('END💪💪:', team);
-
-		const url = `https://free-nba.p.rapidapi.com/games?page=0&per_page=25&team_ids=${teamId}`;
-
-		const games = await fetch(url, {
-			headers: {
-				'X-RapidAPI-Key': process.env.NBA_API_KEY_2,
-				'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
-				'Content-Type': 'application/json',
-			},
-		});
+		// console.log('🔥🔥🔥TEAM:', team);
 
 		const roster = players.filter((player) => {
 			if (player.team.id === team.id) {
 				return player;
 			}
 		});
-		console.log('🤼🤼🤼ROSTER:', roster);
+		// console.log('🤼🤼🤼ROSTER:', roster);
 
-		const gamesData = await games.json();
-		const fixturesData = gamesData.data;
+		const fixtureData = fixtures.filter((game) => {
+			if (game?.home_team?.id || game?.visitor_team?.id === +teamId) {
+				return game;
+			}
+		});
+
+		console.log('🚀🚀🚀FixtureData:', fixtures[0]);
+		console.log('🚀🚀🚀FixtureData:', fixtureData);
 
 		return {
 			props: {
 				team,
-				fixturesData,
+				fixtureData,
 				roster,
 			},
 		};
@@ -129,16 +126,16 @@ export interface DynamicData {
 
 const Team: NextPageWithLayout<DynamicData> = ({
 	team,
-	fixturesData,
+	fixtureData,
 	roster,
 }) => {
 	if (!team) {
 		return <p>Loading...</p>;
 	}
-
+	console.log(fixtureData);
 	return (
 		<>
-			<TeamInfo team={team} roster={roster} fixturesData={fixturesData} />
+			<TeamInfo team={team} roster={roster} fixturesData={fixtureData} />
 		</>
 	);
 };
