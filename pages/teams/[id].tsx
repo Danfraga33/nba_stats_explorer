@@ -21,6 +21,7 @@ export const getStaticPaths = (async () => {
         console.log("NO DATA");
     }
     const nbaTeamsData = result.data;
+    console.log(nbaTeamsData);
 
     const paths = nbaTeamsData.map((team) => ({
         params: {
@@ -37,9 +38,9 @@ export const getStaticPaths = (async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
     try {
         const teamId = context?.params?.id;
-        // console.log('🆔🆔:', teamId);
+
         const baseURL = "https://free-nba.p.rapidapi.com";
-        const headers = {
+        const headers: Headers = {
             "X-RapidAPI-Key": process.env.NBA_API_KEY_2,
             "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             "Content-Type": "application/json",
@@ -67,7 +68,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             }
         });
 
-        console.log("🚀🚀🚀FixtureData:", fixtures[0]);
+        // console.log("🚀🚀🚀FixtureData:", fixtures[0]);
 
         return {
             props: {
@@ -96,7 +97,7 @@ export interface DynamicData {
         name: string;
     };
 
-    fixturesData?: {
+    fixtureData?: {
         id: number;
         date: Date;
         home_team: object;
@@ -130,7 +131,7 @@ const Team: NextPageWithLayout<DynamicData> = ({
     if (!team) {
         return <p>Loading...</p>;
     }
-    console.log(fixtureData);
+
     return (
         <>
             <TeamInfo team={team} roster={roster} fixturesData={fixtureData} />

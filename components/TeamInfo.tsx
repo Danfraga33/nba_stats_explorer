@@ -40,16 +40,15 @@ export interface TeamInfoProps {
     };
 }
 const TeamInfo: FC<TeamInfoProps> = ({ team, roster, fixturesData }) => {
-    console.log(roster);
     return (
-        <div className="grid grid-cols-4 grid-rows-2 gap-0 h-screen container mt-4 bg-blue-500 px-4">
+        <div className="flex flex-col py-2 md:grid md:grid-cols-4 md:grid-rows-2 md:gap-0 h-screen container mt-4 bg-blue-500 px-4">
             <div className="col-span-2 row-span-1">
                 <TeamData team={team} />
             </div>
-            <div className="col-span-2 overflow-auto row-span-1">
+            <div className="md:col-span-2 overflow-auto md:row-span-1">
                 <Fixtures fixturesData={fixturesData} />
             </div>
-            <div className="col-span-4 row-span-2 overflow-auto">
+            <div className="py-2 hidden md:grid md:col-span-4 md:row-span-2 overflow-auto">
                 <Roster roster={roster} />
             </div>
         </div>

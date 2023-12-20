@@ -1,15 +1,15 @@
-import Header from '@/components/Header';
-import React from 'react';
-import { LayoutProps } from './types/layoutProps';
-import Navigation from '@/components/Navigation';
+import Header from "@/components/Header";
+import React from "react";
+import { LayoutProps } from "./types/layoutProps";
+import Navigation from "@/components/Navigation";
 
 const Layout = ({ children }: LayoutProps) => {
-	return (
-		<>
-			<Navigation />
-			{children}
-		</>
-	);
+    return (
+        <>
+            <Navigation />
+            {children}
+        </>
+    );
 };
 
 export default Layout;
