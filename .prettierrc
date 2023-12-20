@@ -1,0 +1,11 @@
+{
+	"tabWidth": 4,
+	"overrides": [
+		{
+			"files": "package-lock.json",
+			"options": {
+				"useTabs": true
+			}
+		}
+	]
+}
