@@ -6,7 +6,7 @@ const perPage = 100;
 const fetchAllStats = async () => {
 	let currentPage = 0;
 	const pages = 15634;
-	const allStats = [];
+	const allStats: string[] = [];
 
 	while (currentPage < pages) {
 		const url = `${baseURL}/stats?page=${currentPage}&per_page=${perPage}`;
