@@ -1,48 +1,60 @@
-import Header from '@/components/Header';
-import MainContent from '@/components/MainContent';
-import { ReactElement } from 'react';
-import Layout from '@/Layout';
-import { NextPageWithLayout } from './_app';
+import Header from "@/components/Header";
+import MainContent from "@/components/MainContent";
+import { ReactElement } from "react";
+import Layout from "@/Layout";
+import { NextPageWithLayout } from "./_app";
+
+export interface MainPageProps {
+    nbaTeams: Array<{
+        id: number;
+        abbreviation: string;
+        city: string;
+        conference: string;
+        division: string;
+        full_name: string;
+        name: string;
+    }>;
+}
 
 export const getStaticProps = async () => {
-	const response = await fetch('https://free-nba.p.rapidapi.com/teams', {
-		headers: {
-			'X-RapidAPI-Key': process.env.NBA_API_KEY_2,
-			'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
-			'Content-Type': 'application/json',
-		},
-	});
+    const response = await fetch("https://free-nba.p.rapidapi.com/teams", {
+        headers: {
+            "X-RapidAPI-Key": process.env.NBA_API_KEY_2,
+            "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
+            "Content-Type": "application/json",
+        },
+    });
 
-	const data = await response.json();
+    const data = await response.json();
 
-	return {
-		props: { nbaTeams: data },
-	};
+    return {
+        props: { nbaTeams: data },
+    };
 };
 
-const Home: NextPageWithLayout = ({ nbaTeams }) => {
-	const teams = nbaTeams.data;
+const Home: NextPageWithLayout<MainPageProps> = ({ nbaTeams }) => {
+    const teams = nbaTeams.data;
 
-	if (!teams) {
-		return <p>Loading...</p>;
-	}
+    if (!teams) {
+        return <p>Loading...</p>;
+    }
 
-	return (
-		<>
-			<div className="px-8 py-1">
-				<Header />
-				<MainContent teams={teams} />
-			</div>
-		</>
-	);
+    return (
+        <>
+            <div className="px-8 py-1">
+                <Header />
+                <MainContent teams={teams} />
+            </div>
+        </>
+    );
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {
-	return (
-		<div>
-			<Layout>{page}</Layout>
-		</div>
-	);
+    return (
+        <div>
+            <Layout>{page}</Layout>
+        </div>
+    );
 };
 
 export default Home;
