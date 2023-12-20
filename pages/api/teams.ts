@@ -10,7 +10,7 @@ export default async function handler(
     res: NextApiResponse<Data>,
 ) {
     const url = "https://free-nba.p.rapidapi.com/teams";
-    const options = {
+    const options: Object = {
         method: "GET",
         headers: {
             "X-RapidAPI-Key": process.env.NBA_API_KEY_2,
