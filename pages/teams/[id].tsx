@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import { NextPageWithLayout } from '../_app';
 import players from '../../players.json';
 import fixtures from '../../games.json';
-
 import type { GetStaticPaths } from 'next';
 import TeamInfo from '@/components/TeamInfo';
 
@@ -63,13 +62,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		// console.log('🤼🤼🤼ROSTER:', roster);
 
 		const fixtureData = fixtures.filter((game) => {
-			if (game?.home_team?.id || game?.visitor_team?.id === +teamId) {
+			if (game?.home_team?.id === +teamId) {
 				return game;
 			}
 		});
 
 		console.log('🚀🚀🚀FixtureData:', fixtures[0]);
-		console.log('🚀🚀🚀FixtureData:', fixtureData);
 
 		return {
 			props: {
