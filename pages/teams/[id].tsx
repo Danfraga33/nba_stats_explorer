@@ -21,8 +21,6 @@ export const getStaticPaths = (async () => {
         console.log("NO DATA");
     }
     const nbaTeamsData = result.data;
-    console.log(nbaTeamsData);
-
     const paths = nbaTeamsData.map((team) => ({
         params: {
             id: team.id.toString(),
@@ -53,22 +51,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
             throw new Error("Failed to fetch team data");
         }
         const team = await teamData.json();
-        // console.log('🔥🔥🔥TEAM:', team);
 
         const roster = players.filter((player) => {
             if (player.team.id === team.id) {
                 return player;
             }
         });
-        // console.log('🤼🤼🤼ROSTER:', roster);
 
         const fixtureData = fixtures.filter((game) => {
             if (game?.home_team?.id === +teamId) {
                 return game;
             }
         });
-
-        // console.log("🚀🚀🚀FixtureData:", fixtures[0]);
 
         return {
             props: {

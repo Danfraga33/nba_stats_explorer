@@ -47,7 +47,7 @@ const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
                 Fixtures
             </h1>
             <div className="overflow-auto flex flex-col items-center justify-center">
-                {fixturesData?.map((game) => (
+                {fixturesData?.map((game: Array) => (
                     <ul key={game.id}>
                         <li className="leading-relaxed flex flex-col items-center">
                             <div>

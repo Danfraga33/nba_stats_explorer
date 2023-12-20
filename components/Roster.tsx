@@ -9,16 +9,18 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export interface RosterPlayer {
-    id: number;
-    first_name: string;
-    height_feet: null;
-    height_inches: null;
-    last_name: string;
-    position: string;
-    team: {
-        city: string;
+    roster: {
+        id: number;
+        first_name: string;
+        height_feet: null;
+        height_inches: null;
+        last_name: string;
+        position: string;
+        team: {
+            city: string;
+        };
+        weight_pounds: null;
     };
-    weight_pounds: null;
 }
 [];
 
@@ -92,10 +94,10 @@ export interface Player {
 }
 
 const Roster: FC<Player> = ({ roster }) => {
-    console.log(roster);
-
-    const statsPerPlayer = roster?.map((player: Object) => {
-        const playerData = Stats.filter((stat) => stat.player.id === player.id);
+    const statsPerPlayer = roster?.map((player: Player) => {
+        const playerData = Stats.filter(
+            (stat: Player) => stat.player.id === player.id,
+        );
         return { ...player, stats: playerData };
     });
 
