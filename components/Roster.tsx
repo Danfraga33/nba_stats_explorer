@@ -1,5 +1,12 @@
 import React, { FC } from "react";
 import Stats from "../stats.json";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 export interface RosterPlayer {
     id: number;
@@ -132,50 +139,85 @@ const Roster: FC<Player> = ({ roster }) => {
         );
         return totalSteal / stlArray.length;
     };
-    console.log(statsPerPlayer);
+
     return (
         <>
             <div className="grid cols-span-2">
-                <table className="table-auto">
-                    <thead>
-                        <tr>
-                            <th className="text-left">Roster</th>
-                            <th className="text-left">Team</th>
-                            <th className="text-left">Avg.Points</th>
-                            <th className="text-left">Assists</th>
-                            <th className="text-left">Rebounds</th>
-                            <th className="text-left">Steals</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {statsPerPlayer?.map((player) => (
-                            <tr key={player?.id}>
-                                <td>{player?.first_name}</td>
-                                <td>{player?.team.city}</td>
-                                <td>
-                                    {calculateAveragePts(player?.stats).toFixed(
-                                        2,
-                                    )}
-                                </td>
-                                <td>
-                                    {calculateAverageAssists(
-                                        player?.stats,
-                                    ).toFixed(2)}
-                                </td>
-                                <td>
-                                    {calculateAverageBlocks(
-                                        player?.stats,
-                                    ).toFixed(2)}
-                                </td>
-                                <td>
-                                    {calculateAverageSteals(
-                                        player?.stats,
-                                    ).toFixed(2)}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>{" "}
-                </table>
+                {statsPerPlayer?.map((player) => (
+                    <>
+                        <TableContainer component={Paper}>
+                            <Table
+                                sx={{ minWidth: 650 }}
+                                aria-label="simple table"
+                            >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Roster</TableCell>
+                                        <TableCell align="right">
+                                            Calories
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            Team
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            Avg.Points
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            Avg.Assists
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            Avg.Rebounds
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            Avg.Steals
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow
+                                        key={player.id}
+                                        sx={{
+                                            "&:last-child td, &:last-child th":
+                                                { border: 0 },
+                                        }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {player?.first_name}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {player?.team.city}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {calculateAveragePts(
+                                                player?.stats,
+                                            ).toFixed(2)}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {calculateAverageAssists(
+                                                player?.stats,
+                                            ).toFixed(2)}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {calculateAverageBlocks(
+                                                player?.stats,
+                                            ).toFixed(2)}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {calculateAverageBlocks(
+                                                player?.stats,
+                                            ).toFixed(2)}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {calculateAverageSteals(
+                                                player?.stats,
+                                            ).toFixed(2)}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </>
+                ))}
             </div>
         </>
     );
