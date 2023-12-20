@@ -143,39 +143,34 @@ const Roster: FC<Player> = ({ roster }) => {
     return (
         <>
             <div className="grid cols-span-2">
-                {statsPerPlayer?.map((player) => (
-                    <>
-                        <TableContainer component={Paper}>
-                            <Table
-                                sx={{ minWidth: 650 }}
-                                aria-label="simple table"
-                            >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Roster</TableCell>
-                                        <TableCell align="right">
-                                            Calories
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Team
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Avg.Points
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Avg.Assists
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Avg.Rebounds
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Avg.Steals
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
+                <>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Roster</TableCell>
+
+                                    <TableCell align="right">Team</TableCell>
+                                    <TableCell align="right">
+                                        Avg.Points
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Avg.Assists
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Avg.Blocks
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Avg.Rebounds
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Avg.Steals
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            {statsPerPlayer?.map((player) => (
+                                <TableBody key={player.id}>
                                     <TableRow
-                                        key={player.id}
                                         sx={{
                                             "&:last-child td, &:last-child th":
                                                 { border: 0 },
@@ -214,10 +209,10 @@ const Roster: FC<Player> = ({ roster }) => {
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </>
-                ))}
+                            ))}
+                        </Table>
+                    </TableContainer>
+                </>
             </div>
         </>
     );
