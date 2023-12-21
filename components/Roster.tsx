@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Stats from "../stats.json";
+import statsJson from "../stats.json";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,6 +11,9 @@ import type { Team, PlayerWithTeam, Stats, Player } from "@/types";
 
 const Roster: FC<{ roster: PlayerWithTeam[] }> = ({ roster }) => {
     const typedStatsJson = statsJson as Stats[];
+    const statsPerPlayer = roster.map((player) => {
+        const playerData = typedStatsJson.filter(
+            (stat) => stat.player.id === player.id,
         );
         return { ...player, stats: playerData };
     });
@@ -70,7 +73,7 @@ const Roster: FC<{ roster: PlayerWithTeam[] }> = ({ roster }) => {
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
-                            {statsPerPlayer?.map((player) => (
+                            {viewModel?.map((player) => (
                                 <TableBody key={player.id}>
                                     <TableRow
                                         sx={{
@@ -79,35 +82,25 @@ const Roster: FC<{ roster: PlayerWithTeam[] }> = ({ roster }) => {
                                         }}
                                     >
                                         <TableCell component="th" scope="row">
-                                            {player?.first_name}
+                                            {player.firstName}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {player?.team.city}
+                                            {player.teamCity}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {calculateAveragePts(
-                                                player?.stats,
-                                            ).toFixed(2)}
+                                            {player.averagePoints}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {calculateAverageAssists(
-                                                player?.stats,
-                                            ).toFixed(2)}
+                                            {player.averageAssists}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {calculateAverageBlocks(
-                                                player?.stats,
-                                            ).toFixed(2)}
+                                            {player.averageBlock}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {calculateAverageBlocks(
-                                                player?.stats,
-                                            ).toFixed(2)}
+                                            {player.averageRebound}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {calculateAverageSteals(
-                                                player?.stats,
-                                            ).toFixed(2)}
+                                            {player.averageSteal}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
