@@ -15,46 +15,32 @@ const Roster: FC<{ roster: PlayerWithTeam[] }> = ({ roster }) => {
         return { ...player, stats: playerData };
     });
 
-    const calculateAveragePts = (ptsArray: Player[]) => {
-        if (ptsArray.length === 0) {
-            return 0;
+    function calculateAverageStat(stats: Stats[], key: keyof Stats): string {
+        let accumulator = 0;
+        let length: number;
+        if (stats.length > 0) {
+            length = stats.length;
+        } else {
+            length = 1;
         }
-        const totalPts = ptsArray.reduce(
-            (sum, stat) => sum + (stat.pts || 0),
-            0,
-        );
-        return totalPts / ptsArray.length;
-    };
-    const calculateAverageAssists = (astArray: Player[]) => {
-        if (astArray.length === 0) {
-            return 0;
+        for (const stat of stats) {
+            if (typeof stat[key] === "number") {
+                accumulator += stat[key] as number;
+            }
         }
-        const totalAssists = astArray.reduce(
-            (sum, stat) => sum + (stat.ast || 0),
-            0,
-        );
-        return totalAssists / astArray.length;
-    };
-    const calculateAverageBlocks = (blkArray: Player[]) => {
-        if (blkArray.length === 0) {
-            return 0;
-        }
-        const totalBlock = blkArray.reduce(
-            (sum, stat) => sum + (stat.blk || 0),
-            0,
-        );
-        return totalBlock / blkArray.length;
-    };
-    const calculateAverageSteals = (stlArray: Player[]) => {
-        if (stlArray.length === 0) {
-            return 0;
-        }
-        const totalSteal = stlArray.reduce(
-            (sum, stat) => sum + (stat.stl || 0),
-            0,
-        );
-        return totalSteal / stlArray.length;
-    };
+        return (accumulator / length).toFixed(2);
+    }
+
+    const viewModel = statsPerPlayer.map((player) => ({
+        id: player.id,
+        firstName: player.first_name,
+        teamCity: player.team.city,
+        averagePoints: calculateAverageStat(player.stats, "pts"),
+        averageAssists: calculateAverageStat(player.stats, "ast"),
+        averageBlock: calculateAverageStat(player.stats, "blk"),
+        averageRebound: calculateAverageStat(player.stats, "reb"),
+        averageSteal: calculateAverageStat(player.stats, "stl"),
+    }));
 
     return (
         <>
