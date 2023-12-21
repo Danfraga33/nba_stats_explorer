@@ -1,46 +1,25 @@
+import { Game } from "./types";
 import * as fs from "fs/promises";
-
-export interface Game {
-    id: number;
-    date: Date;
-    home_team: Team;
-    home_team_score: number;
-    period: number;
-    postseason: boolean;
-    season: number;
-    status: string;
-    time: string;
-    visitor_team: Team;
-    visitor_team_score: number;
-}
-
-export interface Team {
-    id: number;
-    abbreviation: string;
-    city: string;
-    conference: string;
-    division: string;
-    full_name: string;
-    name: string;
-}
 
 const baseURL = "https://free-nba.p.rapidapi.com";
 const perPage = 100;
 
 const fetchAllGames = async () => {
     let currentPage = 0;
-    const pages = 2;
+    const pages = 10;
     const allGames: Game[] = [];
 
     while (currentPage < pages) {
         // Modify the loop condition
+        const headers = new Headers({
+            "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
+            "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
+            "Content-Type": "application/json",
+        });
         const url = `${baseURL}/games?page=${currentPage}&per_page=${perPage}`;
         const options = {
             method: "GET",
-            headers: {
-                "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
-                "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-            },
+            headers,
         };
 
         try {

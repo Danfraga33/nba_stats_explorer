@@ -1,22 +1,29 @@
 import * as fs from "fs/promises";
+import type { Team } from "./types";
 
 const baseURL = "https://free-nba.p.rapidapi.com";
 const perPage = 25;
 
+export interface TeamsResponse {
+    data: Team[];
+}
+
 const fetchAllTeams = async () => {
     let currentPage = 0;
     const pages = 2;
-    const allTeams = [];
+    const allTeams: Team[] = [];
 
     while (currentPage < pages) {
+        const headers = new Headers({
+            "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
+            "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
+            "Content-Type": "application/json",
+        });
         // const url = `https://free-nba.p.rapidapi.com/teams?page=0`;
         const url = `${baseURL}/teams?page=${currentPage}&per_page=${perPage}`;
         const options = {
             method: "GET",
-            headers: {
-                "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
-                "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-            },
+            headers,
         };
 
         try {
@@ -26,7 +33,7 @@ const fetchAllTeams = async () => {
                 throw new Error(`Failed to fetch data for page ${currentPage}`);
             }
 
-            const result = await response.json();
+            const result: TeamsResponse = await response.json();
 
             if (result.data.length === 0) {
                 // No more data, break the loop
