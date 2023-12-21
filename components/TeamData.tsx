@@ -29,24 +29,24 @@ const TeamData: FC<TeamDataProps> = ({ team }) => {
     return (
         <List sx={style} component="nav" aria-label="mailbox folders">
             <ListItem button>
-                <ListItemText primary={team?.name} />
+                Team Name: <ListItemText primary={team?.name} />
             </ListItem>
             <Divider />
             <ListItem button divider>
-                <ListItemText primary={team?.full_name} />
+                Team Full Name: <ListItemText primary={team?.full_name} />
             </ListItem>
             <ListItem button>
-                <ListItemText primary={team?.abbreviation} />
+                Team Abbreviation: <ListItemText primary={team?.abbreviation} />
             </ListItem>
             <Divider light />
             <ListItem button>
-                <ListItemText primary={team?.city} />
+                Team City: <ListItemText primary={team?.city} />
             </ListItem>
             <ListItem button>
-                <ListItemText primary={team?.conference} />
+                Team Conference: <ListItemText primary={team?.conference} />
             </ListItem>
             <ListItem button>
-                <ListItemText primary={team?.division} />
+                Team Division: <ListItemText primary={team?.division} />
             </ListItem>
         </List>
         //   <div className="flex flex-col items-center justify-center">
