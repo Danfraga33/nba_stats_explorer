@@ -6,21 +6,23 @@ import players from "../../players.json";
 import fixtures from "../../games.json";
 import type { GetStaticPaths } from "next";
 import TeamInfo from "@/components/TeamInfo";
+import type { Team, Game, Player, PlayerWithTeam } from "@/types";
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths: GetStaticPaths = (async () => {
+    const headers = new Headers({
+        "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
+        "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
+        "Content-Type": "application/json",
+    });
     const response = await fetch("https://free-nba.p.rapidapi.com/teams", {
-        headers: {
-            "X-RapidAPI-Key": process.env.NBA_API_KEY_2,
-            "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-            "Content-Type": "application/json",
-        },
+        headers,
     });
     const result = await response.json();
 
     if (!result) {
         console.log("NO DATA");
     }
-    const nbaTeamsData = result.data;
+    const nbaTeamsData: Team[] = result.data;
     const paths = nbaTeamsData.map((team) => ({
         params: {
             id: team.id.toString(),
@@ -37,12 +39,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     try {
         const teamId = context?.params?.id;
 
-        const baseURL = "https://free-nba.p.rapidapi.com";
-        const headers: Headers = {
-            "X-RapidAPI-Key": process.env.NBA_API_KEY_2,
+        const headers = new Headers({
+            "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
             "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             "Content-Type": "application/json",
-        };
+        });
+        const baseURL = "https://free-nba.p.rapidapi.com";
         const teamData = await fetch(`${baseURL}/teams/${teamId}`, {
             headers,
         });
