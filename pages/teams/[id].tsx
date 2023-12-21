@@ -23,6 +23,7 @@ export const getStaticPaths: GetStaticPaths = (async () => {
         console.log("NO DATA");
     }
     const nbaTeamsData: Team[] = result.data;
+
     const paths = nbaTeamsData.map((team) => ({
         params: {
             id: team.id.toString(),
@@ -39,6 +40,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     try {
         const teamId = context?.params?.id;
 
+        if (!teamId || typeof teamId === "object") {
+            throw new Error("Failed to fetch team id");
+        }
+
         const headers = new Headers({
             "X-RapidAPI-Key": process.env.NBA_API_KEY_2 as string,
             "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
@@ -52,19 +57,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
         if (!teamData.ok) {
             throw new Error("Failed to fetch team data");
         }
-        const team = await teamData.json();
 
-        const roster = players.filter((player) => {
-            if (player.team.id === team.id) {
-                return player;
-            }
-        });
+        const team: Team = await teamData.json();
 
-        const fixtureData = fixtures.filter((game) => {
-            if (game?.home_team?.id === +teamId) {
-                return game;
-            }
-        });
+        const roster = players.filter((player) => player.team.id === team.id);
+
+        const fixtureData = fixtures.filter(
+            (game) => game.home_team.id === team.id,
+        );
 
         return {
             props: {
