@@ -1,17 +1,10 @@
 import React, { FC } from "react";
-import Link from "next/link";
 import West from "./West";
 import East from "./East";
+import type { Team } from "@/types";
+
 export interface MainContentProps {
-    teams: Array<{
-        id: number;
-        abbreviation: string;
-        city: string;
-        conference: string;
-        division: string;
-        full_name: string;
-        name: string;
-    }>;
+    teams: Team[];
 }
 
 const MainContent: FC<MainContentProps> = ({ teams }) => {

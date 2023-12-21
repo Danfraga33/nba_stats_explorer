@@ -1,23 +1,8 @@
 import { FC, useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import type { Game } from "@/types";
 
 export interface FixturesDataProps {
-    fixturesData?: {
-        id: number;
-        date: Date;
-        home_team: object;
-        home_team_score: number;
-        period: number;
-        postseason: boolean;
-        season: number;
-        status: string;
-        time: string;
-        visitor_team: object;
-        visitor_team_score: number;
-    };
+    fixturesData?: Game[];
 }
 
 const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
@@ -47,7 +32,7 @@ const Fixtures: FC<FixturesDataProps> = ({ fixturesData }) => {
                 Fixtures
             </h1>
             <div className="overflow-auto flex flex-col items-center justify-center">
-                {fixturesData?.map((game: Array) => (
+                {fixturesData?.map((game) => (
                     <ul key={game.id}>
                         <li className="leading-relaxed flex flex-col items-center">
                             <div>

@@ -4,16 +4,8 @@ import { ReactElement } from "react";
 import Layout from "@/Layout";
 import { NextPageWithLayout } from "./_app";
 
-export interface MainPageProps {
-    nbaTeams: Array<{
-        id: number;
-        abbreviation: string;
-        city: string;
-        conference: string;
-        division: string;
-        full_name: string;
-        name: string;
-    }>;
+interface MainPageProps {
+    nbaTeams: Team[];
 }
 
 export const getStaticProps = async () => {
@@ -25,10 +17,10 @@ export const getStaticProps = async () => {
         },
     });
 
-    const data = await response.json();
+    const data: { data: Team[] } = await response.json();
 
     return {
-        props: { nbaTeams: data },
+        props: { nbaTeams: data.data },
     };
 };
 
