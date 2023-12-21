@@ -75,7 +75,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         };
         revalidate: 60;
     } catch (error) {
-        // console.error('Error fetching team data:', error.message);
         return {
             notFound: true,
         };
