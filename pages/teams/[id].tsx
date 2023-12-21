@@ -83,40 +83,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export interface DynamicData {
-    team?: {
-        id: number;
-        abbreviation: string;
-        city: string;
-        conference: string;
-        division: string;
-        full_name: string;
-        name: string;
-    };
-
-    fixtureData?: {
-        id: number;
-        date: Date;
-        home_team: object;
-        home_team_score: number;
-        period: number;
-        postseason: boolean;
-        season: number;
-        status: string;
-        time: string;
-        visitor_team: object;
-        visitor_team_score: number;
-    };
-
-    roster?: {
-        id: number;
-        first_name: string;
-        height_feet: null;
-        height_inches: null;
-        last_name: string;
-        position: string;
-        team: object;
-        weight_pounds: null;
-    };
+    team: Team;
+    fixtureData: Game[];
+    roster: PlayerWithTeam[];
 }
 
 const Team: NextPageWithLayout<DynamicData> = ({
