@@ -74,3 +74,10 @@ npm start
 ```
 npm run lint
 ```
+
+### Limitations
+
+1. API is broken with no direct endpoints and extensive waiting times, thus you would need to develop your own API either through a backend or through JSON.
+2. There is an exorbitant amount of data, thus importing the data into a JSON makes the UX slow and unattractive. This is seen distinctly when importing stats data and games data.
+3. Teams data consists of teams that consists of data that is empty. Thus only import data from page 1
+4. Stats data as explained is extensive as it imports statisical data for all players.
