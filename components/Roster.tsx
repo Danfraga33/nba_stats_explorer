@@ -7,96 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import type { Team, PlayerWithTeam, Stats, Player } from "@/types";
 
-export interface RosterPlayer {
-    roster: {
-        id: number;
-        first_name: string;
-        height_feet: null;
-        height_inches: null;
-        last_name: string;
-        position: string;
-        team: {
-            city: string;
-        };
-        weight_pounds: null;
-    };
-}
-[];
-
-export interface Team {
-    abbreviation: string;
-    city: string;
-    conference: string;
-    division: string;
-    full_name: string;
-    id: number;
-    name: string;
-}
-
-export interface PlayerClass {
-    first_name: string;
-    height_feet: null;
-    height_inches: null;
-    id: number;
-    last_name: string;
-    position: string;
-    team_id: number;
-    weight_pounds: null;
-}
-export interface Game {
-    date: Date;
-    home_team_id: number;
-    home_team_score: number;
-    id: number;
-    period: number;
-    postseason: boolean;
-    season: number;
-    status: string;
-    time: string;
-    visitor_team_id: number;
-    visitor_team_score: number;
-}
-export interface Player {
-    game: Game;
-    id: number;
-    min: string;
-    oreb: number;
-    pf: number;
-    player: PlayerClass;
-    pts: number;
-    reb: number;
-    ast: number;
-    stl: number;
-    team: Team;
-    blk: number;
-    turnover: number;
-}
-export interface Team {
-    id: number;
-    abbreviation: string;
-    city: string;
-    conference: string;
-    division: string;
-}
-
-export interface Player {
-    roster?: {
-        first_name: string;
-        height_feet: null;
-        height_inches: null;
-        id: number;
-        last_name: string;
-        position: string;
-        team: Team;
-        weight_pounds: null;
-    }[];
-}
-
-const Roster: FC<Player> = ({ roster }) => {
-    const statsPerPlayer = roster?.map((player: Player) => {
-        const playerData = Stats.filter(
-            (stat: Player) => stat.player.id === player.id,
+const Roster: FC<{ roster: PlayerWithTeam[] }> = ({ roster }) => {
+    const typedStatsJson = statsJson as Stats[];
         );
         return { ...player, stats: playerData };
     });
