@@ -1,5 +1,6 @@
 # NBA Challenge
 
+
 The NBA Challenge project is a dynamic web application that harnesses the power of the NBA API to provide users with comprehensive information about NBA teams, players, and games. Leveraging the extensive dataset available through the API, the project offers several key features to enhance the user experience:
 
 ## Key Features
